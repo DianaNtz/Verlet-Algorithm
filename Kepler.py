@@ -10,12 +10,12 @@ import imageio
 filenames = []
 #some initial values
 t0=0
-#tfinal=95#equal masses
-tfinal=115#unequal masses
-dt=0.005
-m1=10**(25)#2*10**(26)
-m2=2*10**(26)
-G=6.67259*10**-11
+#tfinal=95 #equal masses in s
+tfinal=115 #unequal masses in s
+dt=0.005 #in s
+m1=10**(25) #2*10**(26) #in kg
+m2=2*10**(26) #in kg
+G=6.67259*10**-11 #gravitational constant in m^3/(kg s^2)
 steps=int((tfinal-t0)/dt)
 t=np.empty(steps+1, dtype='double')
 tn=t0
@@ -36,16 +36,20 @@ y1=np.empty(steps+1, dtype='double')
 z1=np.empty(steps+1, dtype='double') 
 x2=np.empty(steps+1, dtype='double')  
 y2=np.empty(steps+1, dtype='double')  
-z2=np.empty(steps+1, dtype='double') 
+z2=np.empty(steps+1, dtype='double')
+#initial position of first mass in m 
 x10=0
 y10=0
 z10=0
+#initial velocity of first mass in m/s
 vx10=-7.5*1000
 vy10=-20*1000
 vz10=-15*1000
+#initial position of second mass in m
 x20=3000*1000
 y20=0
 z20=0
+#initial velocity of second mass in m/s
 vx20=7.5*1000*m1/m2
 vy20=20*1000*m1/m2
 vz20=15*1000*m1/m2
