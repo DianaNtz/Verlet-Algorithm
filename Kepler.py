@@ -1,5 +1,6 @@
 """
-@author: DianaNtz
+The code below was written by @author: https://github.com/DianaNtz and is an 
+implementation of the Verlet algorithm. It solves in particular the Kepler problem.
 """
 import numpy as np
 import matplotlib.pyplot as plt
