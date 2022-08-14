@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import mpl_toolkits.mplot3d.axes3d as p3
 #some initial values
 t0=0
-#tfinal=95#equal masses
-tfinal=115#unequal masses
+tfinal=95#equal masses
+#tfinal=115#unequal masses
 dt=0.005
-m1=10**(25)#2*10**(26)
+m1=2*10**(26)#10**(25)
 m2=2*10**(26)
 G=6.67259*10**-11
 steps=int((tfinal-t0)/dt)
