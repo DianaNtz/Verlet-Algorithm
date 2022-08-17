@@ -80,19 +80,27 @@ for i in range(0,steps+1):
     x2n=x2n+dt*vx2n+0.5*fx2(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])*dt**2
     y2n=y2n+dt*vy2n+0.5*fy2(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])*dt**2
     z2n=z2n+dt*vz2n+0.5*fz2(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])*dt**2
-    vx1n=vx1n+dt*0.5*(fx1(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])+fx1(x1n,y1n,z1n,x2n,y2n,z2n))
-    vy1n=vy1n+dt*0.5*(fy1(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])+fy1(x1n,y1n,z1n,x2n,y2n,z2n))
-    vz1n=vz1n+dt*0.5*(fz1(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])+fz1(x1n,y1n,z1n,x2n,y2n,z2n))
-    vx2n=vx2n+dt*0.5*(fx2(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])+fx2(x1n,y1n,z1n,x2n,y2n,z2n))
-    vy2n=vy2n+dt*0.5*(fy2(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])+fy2(x1n,y1n,z1n,x2n,y2n,z2n))
-    vz2n=vz2n+dt*0.5*(fz2(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])+fz2(x1n,y1n,z1n,x2n,y2n,z2n))          
+    vx1n=vx1n+dt*0.5*(fx1(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])
+    +fx1(x1n,y1n,z1n,x2n,y2n,z2n))
+    vy1n=vy1n+dt*0.5*(fy1(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])
+    +fy1(x1n,y1n,z1n,x2n,y2n,z2n))
+    vz1n=vz1n+dt*0.5*(fz1(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])
+    +fz1(x1n,y1n,z1n,x2n,y2n,z2n))
+    vx2n=vx2n+dt*0.5*(fx2(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])
+    +fx2(x1n,y1n,z1n,x2n,y2n,z2n))
+    vy2n=vy2n+dt*0.5*(fy2(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])
+    +fy2(x1n,y1n,z1n,x2n,y2n,z2n))
+    vz2n=vz2n+dt*0.5*(fz2(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])
+    +fz2(x1n,y1n,z1n,x2n,y2n,z2n))          
     t[i]=tn
     tn=tn+dt
     if(i%200==0):
        fig = plt.figure()
        ax = p3.Axes3D(fig)     
-       ax.plot(x2[:i]*10**(-6), y2[:i]*10**(-6),z2[:i]*10**(-6),color='skyblue',linewidth=2)
-       ax.plot(x1[:i]*10**(-6), y1[:i]*10**(-6),z1[:i]*10**(-6),color='deeppink',linestyle='-.',linewidth=2)
+       ax.plot(x2[:i]*10**(-6), y2[:i]*10**(-6),z2[:i]*10**(-6),
+       color='skyblue',linewidth=2)
+       ax.plot(x1[:i]*10**(-6), y1[:i]*10**(-6),z1[:i]*10**(-6),
+       color='deeppink',linestyle='-.',linewidth=2)
        ax.set_zlim(-0.5,0.5)
        ax.set_ylim(-0.75,0.75)
        ax.set_xlim(0,3.0)
@@ -102,6 +110,8 @@ for i in range(0,steps+1):
        ax.zaxis.set_tick_params(labelsize=13)
        ax.yaxis.set_tick_params(labelsize=13)
        ax.xaxis.set_tick_params(labelsize=13)
+       stringtitle="t=".__add__(str(round(t[i],1))).__add__(" s")
+       plt.title(stringtitle,fontsize=20,x=0.5, y=0.95)
        ax.set_xticks([0,1,2,3])
        ax.set_yticks([-0.75,0,0.75])
        ax.set_zticks([-0.5,0,0.5])
@@ -115,4 +125,4 @@ with imageio.get_writer('kepleruneuqalmasses.gif', mode='I') as writer:
         image = imageio.imread(filename)
         writer.append_data(image)       
 for filename in set(filenames):
-    os.remove(filename)     
+    os.remove(filename)   
