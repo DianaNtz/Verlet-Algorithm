@@ -10,10 +10,10 @@ import imageio
 filenames = []
 #some initial values
 t0=0
-#tfinal=95 #equal masses in s
-tfinal=115 #unequal masses in s
+tfinal=95 #equal masses in s
+#tfinal=115 #unequal masses in s
 dt=0.005 #in s
-m1=10**(25) #2*10**(26) #in kg
+m1=2*10**(26) #10**(25) #in kg
 m2=2*10**(26) #in kg
 G=6.67259*10**-11 #gravitational constant in m^3/(kg s^2)
 steps=int((tfinal-t0)/dt)
@@ -120,7 +120,7 @@ for i in range(0,steps+1):
        filenames.append(filename)    
        plt.savefig(filename,dpi=150)
        plt.close()       
-with imageio.get_writer('kepleruneuqalmasses.gif', mode='I') as writer:
+with imageio.get_writer('keplereuqalmasses.gif', mode='I') as writer:
     for filename in filenames:
         image = imageio.imread(filename)
         writer.append_data(image)       
