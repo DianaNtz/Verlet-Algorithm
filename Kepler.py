@@ -10,10 +10,10 @@ import imageio
 filenames = []
 #some initial values
 t0=0
-tfinal=95 #equal masses in s
+tfinal=250 #equal masses in s
 #tfinal=115 #unequal masses in s
-dt=0.005 #in s
-m1=2*10**(26) #10**(25) #in kg
+dt=0.002#in s
+m1=2*10**(26) #7*10**(25) #in kg
 m2=2*10**(26) #in kg
 G=6.67259*10**-11 #gravitational constant in m^3/(kg s^2)
 steps=int((tfinal-t0)/dt)
@@ -37,22 +37,26 @@ z1=np.empty(steps+1, dtype='double')
 x2=np.empty(steps+1, dtype='double')  
 y2=np.empty(steps+1, dtype='double')  
 z2=np.empty(steps+1, dtype='double')
+#center of mass
+Rx=np.empty(steps+1, dtype='double')
+Ry=np.empty(steps+1, dtype='double')
+Rz=np.empty(steps+1, dtype='double')
 #initial position of first mass in m 
-x10=0
+x10=3000*1000
 y10=0
 z10=0
 #initial velocity of first mass in m/s
 vx10=-7.5*1000
-vy10=-20*1000
-vz10=-15*1000
+vy10=-vx10*2
+vz10=1000
 #initial position of second mass in m
-x20=3000*1000
-y20=0
-z20=0
+x20=-x10*m1/m2
+y20=-y10*m1/m2
+z20=-z10*m1/m2
 #initial velocity of second mass in m/s
-vx20=7.5*1000*m1/m2
-vy20=20*1000*m1/m2
-vz20=15*1000*m1/m2
+vx20=-vx10*m1/m2
+vy20=-vy10*m1/m2
+vz20=1000
 x1n=x10
 y1n=y10
 z1n=z10
@@ -72,7 +76,10 @@ for i in range(0,steps+1):
     z1[i]=z1n    
     x2[i]=x2n
     y2[i]=y2n
-    z2[i]=z2n 
+    z2[i]=z2n
+    Rx[i]=(m1*x1[i]+m2*x2[i])/(m1+m2)
+    Ry[i]=(m1*y1[i]+m2*y2[i])/(m1+m2)
+    Rz[i]=(m1*z1[i]+m2*z2[i])/(m1+m2)
     #Verlet algorithm
     x1n=x1n+dt*vx1n+0.5*fx1(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])*dt**2
     y1n=y1n+dt*vy1n+0.5*fy1(x1[i],y1[i],z1[i],x2[i],y2[i],z2[i])*dt**2
@@ -101,9 +108,11 @@ for i in range(0,steps+1):
        color='skyblue',linewidth=2)
        ax.plot(x1[:i]*10**(-6), y1[:i]*10**(-6),z1[:i]*10**(-6),
        color='deeppink',linestyle='-.',linewidth=2)
-       ax.set_zlim(-0.5,0.5)
-       ax.set_ylim(-0.75,0.75)
-       ax.set_xlim(0,3.0)
+       ax.plot(Rx[:i]*10**(-6), Ry[:i]*10**(-6),Rz[:i]*10**(-6),
+       color='black',linestyle='-',linewidth=2)
+       ax.set_zlim(0,0.17)
+       ax.set_ylim(-1,1)
+       ax.set_xlim(-3.0,3.0)
        ax.set_xlabel("x in $10^3$ km",fontsize= 13,labelpad=7)
        ax.set_ylabel("y in $10^3$ km",fontsize= 13,labelpad=7)
        ax.set_zlabel("z in $10^3$ km",fontsize= 13,labelpad=7)
@@ -112,15 +121,15 @@ for i in range(0,steps+1):
        ax.xaxis.set_tick_params(labelsize=13)
        stringtitle="t=".__add__(str(round(t[i],1))).__add__(" s")
        plt.title(stringtitle,fontsize=20,x=0.5, y=0.95)
-       ax.set_xticks([0,1,2,3])
-       ax.set_yticks([-0.75,0,0.75])
-       ax.set_zticks([-0.5,0,0.5])
-       ax.view_init(10, 230) 
+       ax.set_xticks([-3,-2,-1,0,1,2,3])
+       ax.set_yticks([-1,-0.5,0,0.5,1])
+       ax.set_zticks([0,0.05,0.1,0.15])
+       ax.view_init(20, 230) 
        filename ='bla{0:.0f}.png'.format(i/200)
        filenames.append(filename)    
-       plt.savefig(filename,dpi=150)
+       plt.savefig(filename,dpi=100)
        plt.close()       
-with imageio.get_writer('keplereuqalmasses.gif', mode='I') as writer:
+with imageio.get_writer('kepler1.gif', mode='I') as writer:
     for filename in filenames:
         image = imageio.imread(filename)
         writer.append_data(image)       
