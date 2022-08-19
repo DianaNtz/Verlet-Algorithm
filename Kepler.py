@@ -11,9 +11,9 @@ filenames = []
 #some initial values
 t0=0
 tfinal=250 #equal masses in s
-#tfinal=115 #unequal masses in s
+#tfinal=146 #unequal masses in s
 dt=0.002#in s
-m1=7*10**(25) #2*10**(26) #in kg
+m1=2*10**(26)#7*10**(25) #in kg
 m2=2*10**(26) #in kg
 G=6.67259*10**-11 #gravitational constant in m^3/(kg s^2)
 steps=int((tfinal-t0)/dt)
@@ -110,7 +110,12 @@ for i in range(0,steps+1):
        color='deeppink',linestyle='-.',linewidth=2)
        ax.plot(Rx[:i]*10**(-6), Ry[:i]*10**(-6),Rz[:i]*10**(-6),
        color='black',linestyle='-',linewidth=2)
+       #ax.plot(x2[:i]*10**(-6)-Rx[:i]*10**(-6), y2[:i]*10**(-6)-Ry[:i]*10**(-6),
+       #z2[:i]*10**(-6)-Rz[:i]*10**(-6),color='skyblue',linewidth=2)
+       #ax.plot(x1[:i]*10**(-6)-Rx[:i]*10**(-6), y1[:i]*10**(-6)-Ry[:i]*10**(-6),
+       #z1[:i]*10**(-6)-Rz[:i]*10**(-6),color='deeppink',linestyle='-.',linewidth=2)
        ax.set_zlim(0,0.25) #with center of mass
+       #ax.set_zlim(-0.05,0,0.05) #without center of mass
        ax.set_ylim(-1,1)
        ax.set_xlim(-3.0,3.0) 
        ax.set_xlabel("x in $10^3$ km",fontsize= 13,labelpad=7)
@@ -124,12 +129,13 @@ for i in range(0,steps+1):
        ax.set_xticks([-3,-2,-1,0,1,2,3])
        ax.set_yticks([-1,-0.5,0,0.5,1])
        ax.set_zticks([0,0.05,0.1,0.15,0.2,0.25]) #with center of mass
-       ax.view_init(20, 230) 
+       #ax.set_zticks([-0.05,0,0.05]) #without center of mass 
+       ax.view_init(15, 230) 
        filename ='bla{0:.0f}.png'.format(i/1000)
        filenames.append(filename)    
        plt.savefig(filename,dpi=100)
        plt.close()       
-with imageio.get_writer('kepler3.gif', mode='I') as writer:
+with imageio.get_writer('kepler1.gif', mode='I') as writer:
     for filename in filenames:
         image = imageio.imread(filename)
         writer.append_data(image)       
